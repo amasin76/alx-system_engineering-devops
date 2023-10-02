@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+apt-get -y update
+apt-get -y install haproxy=2.4.\*
+
+echo '
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+frontend itri.tech
+        bind *:80
+        default_backend web_servers
+
+backend web_servers
+        balance roundrobin
+        server 376423-web-01 52.87.232.85:80 check
+        server 376423-web-02 52.91.148.64:80 check
+' >> /etc/haproxy/haproxy.cfg
+
+haproxy -c -f /etc/haproxy/haproxy.cfg
+service haproxy restart
