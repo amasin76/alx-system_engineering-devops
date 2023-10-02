@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 # custom http response header
 
-file=/etc/nginx/sites-available/default
-phrase="/server_name _/a add_header X-Served-By $HOSTNAME;"
-sudo sed -i "$phrase" $file
+sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
 
 sudo nginx -t
 sudo service nginx restart
