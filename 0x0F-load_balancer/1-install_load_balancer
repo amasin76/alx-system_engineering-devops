@@ -18,5 +18,4 @@ backend web_servers
 
 EOF 
 
-haproxy -c -f /etc/haproxy/haproxy.cfg
 service haproxy restart
