@@ -2,10 +2,7 @@
 # tmp
 
 apt-get -y update
-sudo apt install --no-install-recommends software-properties-common
-sudo add-apt-repository ppa:vbernat/haproxy-2.4 -y
-apt-get -y update
-apt-get -y install haproxy=2.4.\*
+apt-get -y install haproxy
 
 sudo sed -i "9i ENABLED=1" /etc/default/haproxy
 sudo cat >> /etc/haproxy/haproxy.cfg <<EOF
