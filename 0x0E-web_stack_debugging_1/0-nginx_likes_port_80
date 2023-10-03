@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# script that resetore nginx to default port
+
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service ngnix restart
