@@ -5,17 +5,16 @@ apt-get -y update
 apt-get -y install haproxy
 
 sudo sed -i "9i ENABLED=1" /etc/default/haproxy
-sudo cat >> /etc/haproxy/haproxy.cfg <<EOF
 
+echo '
 frontend itri.tech
-        bind *:80
-        default_backend web_servers
+	bind *:80
+	default_backend web_servers
 
 backend web_servers
-        balance roundrobin
-        server 376423-web-01 52.87.232.85:80 check
-        server 376423-web-02 52.91.148.64:80 check
-
-EOF 
+	balance roundrobin
+	server 376423-web-01 52.87.232.85:80 check
+	server 376423-web-02 52.91.148.64:80 check
+' >> /etc/haproxy/haproxy.cfg
 
 service haproxy restart
