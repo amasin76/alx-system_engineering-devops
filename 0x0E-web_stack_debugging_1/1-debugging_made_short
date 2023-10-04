@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# reset nginx and gracefully terminate it
+
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+pkill -1 nginx
