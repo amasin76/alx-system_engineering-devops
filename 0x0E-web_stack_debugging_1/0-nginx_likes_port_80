@@ -3,4 +3,4 @@
 available=/etc/nginx/sites-available/default
 enabled=/etc/nginx/sites-enabled/default
 sudo ln -sf $available $enabled
-service ngnix restart
+sudo service ngnix restart
