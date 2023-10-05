@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# script that resetore nginx to default port
-available=/etc/nginx/sites-available/default
-enabled=/etc/nginx/sites-enabled/default
-sudo ln -sf $available $enabled
-sudo service ngnix restart
+#change
+file1=/etc/nginx/sites-enabled/default
+file2=/etc/nginx/sites-available/default
+sudo ln -sf $file2 $file1
+sudo service nginx restartt
