@@ -3,4 +3,4 @@
 file1=/etc/nginx/sites-enabled/default
 file2=/etc/nginx/sites-available/default
 sudo ln -sf $file2 $file1
-sudo service nginx restartt
+sudo service nginx restart
