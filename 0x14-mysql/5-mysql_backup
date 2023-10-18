@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if password is supplied
 if [ -z "$1" ]; then
