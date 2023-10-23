@@ -23,5 +23,6 @@ if __name__ == "__main__":
         writer = csv.writer(file, delimiter=',', quotechar='"',
                             quoting=csv.QUOTE_ALL, lineterminator='\n')
         for task in todos:
-            writer.writerow([user_id, user.get('name'),
-                            task.get('completed'), task.get('title')])
+            if task.get('userId') == int(user_id):
+                writer.writerow([user_id, user.get('name'),
+                                 task.get('completed'), task.get('title')])
