@@ -1,34 +1,32 @@
 #!/usr/bin/python3
 """Count it api"""
-import requests
 from collections import Counter
 import re
+import requests
 
 
-def count_words(subreddit, word_list, hot_list=[], after=None):
+def count_words(subreddit, word_list, hot_list=[], counts=[], after=None):
+    if not counts:
+        counts = [0]*len(word_list)
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     if after:
         url += f"?after={after}"
     headers = {'User-Agent': 'custom'}
     response = requests.get(url, headers=headers, allow_redirects=False)
     if response.status_code != 200:
-        if hot_list:
-            word_count = Counter(hot_list)
-            word_list_lower = [word.lower() for word in word_list]
-            for word, count in sorted(word_count.items(),
-                                      key=lambda x: (-x[1], x[0])):
-                if word in word_list_lower:
-                    print(f"{word}: {count}")
         return
     data = response.json()['data']
-    hot_list.extend([word.lower() for title in data['children']
-                     for word in re.split(r'\W', title['data']['title'])])
+    titles = []
+    for title in data['children']:
+        for word in re.split(r'\W', title['data']['title']):
+            titles.append(word.lower())
+    for i, word in enumerate(word_list):
+        counts[i] += titles.count(word.lower())
     if data['after'] is None:
-        word_count = Counter(hot_list)
-        word_list_lower = [word.lower() for word in word_list]
-        for word, count in sorted(word_count.items(),
-                                  key=lambda x: (-x[1], x[0])):
-            if word in word_list_lower:
+        word_counts = list(zip(word_list, counts))
+        word_counts.sort(key=lambda x: (-x[1], x[0]))
+        for word, count in word_counts:
+            if count > 0:
                 print(f"{word}: {count}")
     else:
-        count_words(subreddit, word_list, hot_list, data['after'])
+        count_words(subreddit, word_list, hot_list, counts, data['after'])
